@@ -19,5 +19,4 @@ public class SmartQueueManagementApplication {
             System.out.println("Database Connected Successfully!");
         };
     }
-
 }
