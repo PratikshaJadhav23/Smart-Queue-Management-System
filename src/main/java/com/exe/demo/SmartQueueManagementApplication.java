@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.exe.demo.repository.CustomerRepository;
+import com.exe.demo.repository.UserRepository;
 
 @SpringBootApplication
 public class SmartQueueManagementApplication {
@@ -14,7 +14,7 @@ public class SmartQueueManagementApplication {
 		SpringApplication.run(SmartQueueManagementApplication.class, args);
 	}
 	@Bean
-    public CommandLineRunner testDB(CustomerRepository repo) {
+    public CommandLineRunner testDB(UserRepository repo) {
         return args -> {
             System.out.println("Database Connected Successfully!");
         };
