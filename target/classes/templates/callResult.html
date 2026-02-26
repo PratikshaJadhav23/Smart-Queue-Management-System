@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Call Result</title>
+</head>
+<body>
+
+<h2>Next Token</h2>
+
+<div th:if="${calledToken != null}">
+    <h3>
+        Token: <span th:text="${calledToken.tokenNumber}"></span>
+    </h3>
+    <p>Priority: <span th:text="${calledToken.priorityType}"></span></p>
+
+    <a th:href="@{'/admin/complete/' + ${calledToken.id}}">
+        Mark as Completed
+    </a>
+</div>
+
+<div th:if="${message != null}">
+    <p th:text="${message}"></p>
+</div>
+
+<br>
+<a href="/admin/dashboard">Back to Dashboard</a>
+
+</body>
+</html>

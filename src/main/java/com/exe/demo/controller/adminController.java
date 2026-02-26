@@ -4,16 +4,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.exe.demo.model.ServiceEntity;
+import com.exe.demo.model.Token;
 import com.exe.demo.model.User;
+import com.exe.demo.repository.ServiceRepository;
+import com.exe.demo.repository.TokenRepository;
 import com.exe.demo.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class adminController {
+	
+	@Autowired
+	private TokenRepository tokenRepository;
+
+	@Autowired
+	private ServiceRepository serviceRepository;
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -38,11 +49,13 @@ public class adminController {
 	
 	// Dashboard
     @GetMapping("/adminDashboard")
-    public String dashboard(HttpSession session) {
+    public String dashboard(HttpSession session,Model model) {
 
-        if (session.getAttribute("admin") == null) {
+    	if (session.getAttribute("admin") == null) {
             return "redirect:/admin/login";
         }
+
+        model.addAttribute("services", serviceRepository.findAll());
 
         return "adminDashboard";
     }
@@ -53,5 +66,75 @@ public class adminController {
         session.invalidate();
         return "redirect:/admin/login";
     }
+    
+    
+    @GetMapping("/admin/call-next/{serviceId}")
+    public String callNextToken(@PathVariable Long serviceId,
+                                HttpSession session,
+                                Model model) {
 
+        if (session.getAttribute("admin") == null) {
+            return "redirect:/admin/login";
+        }
+
+        ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
+
+        if (service == null) {
+            return "redirect:/adminDashboard";
+        }
+
+        Token nextToken = null;
+
+        // Priority 1: DISABLED
+        nextToken = tokenRepository
+                .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+                        service, "WAITING", "DISABLED")
+                .orElse(null);
+
+        // Priority 2: SENIOR
+        if (nextToken == null) {
+            nextToken = tokenRepository
+                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+                            service, "WAITING", "SENIOR")
+                    .orElse(null);
+        }
+
+        // Priority 3: NORMAL
+        if (nextToken == null) {
+            nextToken = tokenRepository
+                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+                            service, "WAITING", "NORMAL")
+                    .orElse(null);
+        }
+
+        if (nextToken != null) {
+            nextToken.setStatus("CALLED");
+            tokenRepository.save(nextToken);
+            model.addAttribute("calledToken", nextToken);
+        } else {
+            model.addAttribute("message", "No tokens in queue");
+        }
+
+        model.addAttribute("service", service);
+
+        return "callResult";
+    }
+    
+    @GetMapping("/admin/complete/{tokenId}")
+    public String completeToken(@PathVariable Long tokenId,
+                                HttpSession session) {
+
+        if (session.getAttribute("admin") == null) {
+            return "redirect:/admin/login";
+        }
+
+        Token token = tokenRepository.findById(tokenId).orElse(null);
+
+        if (token != null) {
+            token.setStatus("COMPLETED");
+            tokenRepository.save(token);
+        }
+
+        return "redirect:/admin/dashboard";
+    }
 }

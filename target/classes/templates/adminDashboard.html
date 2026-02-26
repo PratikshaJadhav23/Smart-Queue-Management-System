@@ -19,5 +19,24 @@
     <li>View Tokens</li>
 </ul>
 <a href="/admin/services">Manage Services</a>
+
+<br><BR>
+<h3>Call Next Token</h3>
+
+<table border="1">
+    <tr>
+        <th>Service</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="service : ${services}">
+        <td th:text="${service.serviceName}"></td>
+        <td>
+            <a th:href="@{'/admin/call-next/' + ${service.id}}">
+                Call Next
+            </a>
+        </td>
+    </tr>
+</table>
 </body>
 </html>
