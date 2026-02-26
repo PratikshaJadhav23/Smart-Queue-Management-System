@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Service List</title>
+</head>
+<body>
+
+<h2>Government Services</h2>
+
+<a href="/admin/services/add">Add New Service</a>
+<br><br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Avg Time</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="service : ${services}">
+        <td th:text="${service.id}"></td>
+        <td th:text="${service.serviceName}"></td>
+        <td th:text="${service.serviceCode}"></td>
+        <td th:text="${service.avgServiceTime}"></td>
+        <td th:text="${service.status ? 'Active' : 'Inactive'}"></td>
+        <td>
+            <a th:href="@{'/admin/services/toggle/' + ${service.id}}">
+                Toggle Status
+            </a>
+        </td>
+    </tr>
+</table>
+
+<br>
+<a href="/adminDashboard">Back to Dashboard</a>
+
+</body>
+</html>
