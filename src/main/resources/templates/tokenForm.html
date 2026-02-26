@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Generate Token</title>
+</head>
+<body>
+
+<h2>Generate Token</h2>
+
+<form method="post" action="/token">
+
+    <label>Name:</label>
+    <input type="text" name="citizenName" required><br><br>
+
+    <label>Mobile:</label>
+    <input type="text" name="mobile" required><br><br>
+
+    <label>Select Service:</label>
+    <select name="serviceId" required>
+        <option value="">--Select--</option>
+        <option th:each="service : ${services}"
+                th:value="${service.id}"
+                th:text="${service.serviceName}">
+        </option>
+    </select><br><br>
+
+    <label>Priority:</label>
+    <select name="priorityType">
+        <option value="NORMAL">Normal</option>
+        <option value="SENIOR">Senior Citizen</option>
+        <option value="DISABLED">Disabled</option>
+    </select><br><br>
+
+    <button type="submit">Generate Token</button>
+</form>
+
+<p style="color:red;" th:text="${error}"></p>
+
+</body>
+</html>

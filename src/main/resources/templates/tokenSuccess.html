@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Token Generated</title>
+</head>
+<body>
+
+<h2>Your Token is Generated!</h2>
+
+<h3>Token Number: <span th:text="${tokenNumber}"></span></h3>
+
+<p>Estimated Waiting Time: 
+   <span th:text="${estimatedTime}"></span> minutes</p>
+
+<a href="/token">Generate Another</a>
+
+</body>
+</html>

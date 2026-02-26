@@ -10,11 +10,11 @@ public class Token {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Integer tokenNumber;
+	private String tokenNumber;
 	private String citizenName;
 	private String mobile;
 	private String priorityType;  //NORMAL,SENIOR,DISABLED
-	private String Status;    //WAITING ,CALLED,COMPLETED
+	private String status;    //WAITING ,CALLED,COMPLETED
 	private LocalDateTime createdTime;
 	
 	@ManyToOne
@@ -28,7 +28,6 @@ public class Token {
 	private Integer counterNumber;
 	public Token() {
 		this.createdTime = LocalDateTime.now();
-		this.Status = "WAITING";
 	}
 	public Long getId() {
 		return id;
@@ -36,10 +35,10 @@ public class Token {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Integer getTokenNumber() {
+	public String getTokenNumber() {
 		return tokenNumber;
 	}
-	public void setTokenNumber(Integer tokenNumber) {
+	public void setTokenNumber(String tokenNumber) {
 		this.tokenNumber = tokenNumber;
 	}
 	public String getCitizenName() {
@@ -60,11 +59,12 @@ public class Token {
 	public void setPriorityType(String priorityType) {
 		this.priorityType = priorityType;
 	}
+	
 	public String getStatus() {
-		return Status;
+		return status;
 	}
 	public void setStatus(String status) {
-		Status = status;
+		this.status = status;
 	}
 	public LocalDateTime getCreatedTime() {
 		return createdTime;
