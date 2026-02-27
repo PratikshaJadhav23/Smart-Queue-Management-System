@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Token Status</title>
+</head>
+<body>
+
+<h2>Token Details</h2>
+
+<p><strong>Token Number:</strong>
+    <span th:text="${token.tokenNumber}"></span>
+</p>
+
+<p><strong>Status:</strong>
+    <span th:text="${token.status}"></span>
+</p>
+
+<p th:if="${token.status == 'WAITING'}">
+    <strong>Queue Position:</strong>
+    <span th:text="${position}"></span>
+</p>
+
+<p th:if="${token.status == 'WAITING'}">
+    <strong>Estimated Waiting Time:</strong>
+    <span th:text="${estimatedTime}"></span> minutes
+</p>
+
+<p th:if="${token.status == 'CALLED'}" style="color:green;">
+    Please go to Counter:
+    <span th:text="${token.counter.counterName}"></span>
+</p>
+
+<p th:if="${token.status == 'COMPLETED'}" style="color:blue;">
+    Your service is completed.
+</p>
+
+<br>
+<a href="/token/status">Check Another</a>
+
+</body>
+</html>

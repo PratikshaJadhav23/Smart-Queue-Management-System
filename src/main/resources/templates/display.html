@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Queue Display Screen</title>
+
+    <meta http-equiv="refresh" content="5">
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+        }
+
+        .token-box {
+            font-size: 70px;
+            margin-top: 40px;
+            color: yellow;
+        }
+
+        .counter-box {
+            font-size: 40px;
+            margin-top: 20px;
+        }
+
+        .next-list {
+            margin-top: 50px;
+            font-size: 30px;
+        }
+
+        table {
+            margin: auto;
+            margin-top: 20px;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Government Office Queue System</h1>
+
+<div th:if="${currentToken != null}">
+
+    <div class="token-box">
+        Token: <span th:text="${currentToken.tokenNumber}"></span>
+    </div>
+
+    <div class="counter-box">
+        Counter:
+        <span th:text="${currentToken.counter != null ? currentToken.counter.counterName : 'Not Assigned'}"></span>
+         </div>
+
+</div>
+
+<div th:if="${currentToken == null}">
+    <h2>No Token Called Yet</h2>
+</div>
+
+<div class="next-list">
+    <h2>Next Tokens</h2>
+
+    <table border="1">
+        <tr>
+            <th>Token Number</th>
+        </tr>
+
+        <tr th:each="token : ${nextTokens}">
+            <td th:text="${token.tokenNumber}"></td>
+        </tr>
+
+    </table>
+</div>
+
+
+
+</body>
+</html>

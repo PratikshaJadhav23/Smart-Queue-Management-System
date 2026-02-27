@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.exe.demo.model.Counter;
 import com.exe.demo.model.ServiceEntity;
 import com.exe.demo.model.Token;
 import com.exe.demo.model.User;
+import com.exe.demo.repository.CounterRepository;
 import com.exe.demo.repository.ServiceRepository;
 import com.exe.demo.repository.TokenRepository;
 import com.exe.demo.repository.UserRepository;
@@ -19,6 +21,8 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class adminController {
+	@Autowired
+	private CounterRepository counterRepository;
 	
 	@Autowired
 	private TokenRepository tokenRepository;
@@ -106,35 +110,43 @@ public class adminController {
                             service, "WAITING", "NORMAL")
                     .orElse(null);
         }
-
         if (nextToken != null) {
-            nextToken.setStatus("CALLED");
-            tokenRepository.save(nextToken);
-            model.addAttribute("calledToken", nextToken);
+
+            // Find available OPEN counter for this service
+            Counter counter = counterRepository
+                    .findFirstByServiceAndStatus(service, "OPEN")
+                    .orElse(null);
+
+            if (counter != null) {
+                nextToken.setStatus("CALLED");
+                nextToken.setCounter(counter);  // Assign counter
+                tokenRepository.save(nextToken);
+
+                model.addAttribute("calledToken", nextToken);
+                model.addAttribute("counterName", counter.getCounterName());
+            } else {
+                model.addAttribute("message", "No open counter available.");
+            }
+
         } else {
-            model.addAttribute("message", "No tokens in queue");
+            model.addAttribute("message", "No tokens in queue.");
         }
-
         model.addAttribute("service", service);
-
         return "callResult";
     }
+    
     
     @GetMapping("/admin/complete/{tokenId}")
     public String completeToken(@PathVariable Long tokenId,
                                 HttpSession session) {
-
         if (session.getAttribute("admin") == null) {
             return "redirect:/admin/login";
         }
-
         Token token = tokenRepository.findById(tokenId).orElse(null);
-
         if (token != null) {
             token.setStatus("COMPLETED");
             tokenRepository.save(token);
         }
-
-        return "redirect:/admin/dashboard";
+        return "redirect:/adminDashboard";
     }
 }

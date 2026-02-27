@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Counters</title>
+</head>
+<body>
+
+<h2>Manage Counters</h2>
+
+<form method="post" action="/admin/counters/add">
+
+    <input type="text" name="counterName" placeholder="Counter Name" required>
+
+    <select name="serviceId" required>
+        <option th:each="service : ${services}"
+                th:value="${service.id}"
+                th:text="${service.serviceName}">
+        </option>
+    </select>
+
+    <button type="submit">Add Counter</button>
+</form>
+
+<br><br>
+
+<table border="1">
+    <tr>
+        <th>Counter</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="counter : ${counters}">
+        <td th:text="${counter.counterName}"></td>
+        <td th:text="${counter.service.serviceName}"></td>
+        <td th:text="${counter.status}"></td>
+        <td>
+            <a th:href="@{'/admin/counters/toggle/' + ${counter.id}}">
+                Toggle
+            </a>
+        </td>
+    </tr>
+</table>
+
+<br>
+<a href="/admin/dashboard">Back</a>
+
+</body>
+</html>

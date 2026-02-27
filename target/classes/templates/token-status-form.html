@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Check Token Status</title>
+</head>
+<body>
+
+<h2>Check Your Token Status</h2>
+
+<form method="post" action="/token/status">
+    <input type="text" name="tokenNumber" placeholder="Enter Token Number" required>
+    <button type="submit">Check</button>
+</form>
+
+<p th:text="${error}" style="color:red;"></p>
+
+</body>
+</html>
