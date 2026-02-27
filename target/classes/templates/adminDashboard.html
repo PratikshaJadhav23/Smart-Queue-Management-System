@@ -40,5 +40,26 @@
 </table>
 
 <a href="/admin/counters">Manage Counters</a>
+
+<a th:href="@{'/admin/complete/' + ${calledToken.id}}">
+    Mark as Completed
+</a>
+
+<h2>Daily Statistics</h2>
+
+<table border="1">
+    <tr>
+        <th>Total Tokens</th>
+        <th>Waiting</th>
+        <th>Called</th>
+        <th>Completed</th>
+    </tr>
+    <tr>
+        <td th:text="${total}"></td>
+        <td th:text="${waiting}"></td>
+        <td th:text="${called}"></td>
+        <td th:text="${completed}"></td>
+    </tr>
+</table>
 </body>
 </html>

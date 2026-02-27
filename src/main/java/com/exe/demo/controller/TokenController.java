@@ -70,6 +70,7 @@ public class TokenController {
         model.addAttribute("estimatedTime", estimatedTime);
 
         return "tokenSuccess";
+        
 	}
 	
 }

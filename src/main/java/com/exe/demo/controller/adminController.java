@@ -54,6 +54,16 @@ public class adminController {
 	// Dashboard
     @GetMapping("/adminDashboard")
     public String dashboard(HttpSession session,Model model) {
+    	
+    	long total = tokenRepository.count();
+    	long waiting = tokenRepository.countByStatus("WAITING");
+    	long called = tokenRepository.countByStatus("CALLED");
+    	long completed = tokenRepository.countByStatus("COMPLETED");
+
+    	model.addAttribute("total", total);
+    	model.addAttribute("waiting", waiting);
+    	model.addAttribute("called", called);
+    	model.addAttribute("completed", completed);
 
     	if (session.getAttribute("admin") == null) {
             return "redirect:/admin/login";
@@ -72,69 +82,84 @@ public class adminController {
     }
     
     
-    @GetMapping("/admin/call-next/{serviceId}")
-    public String callNextToken(@PathVariable Long serviceId,
-                                HttpSession session,
-                                Model model) {
-
-        if (session.getAttribute("admin") == null) {
-            return "redirect:/admin/login";
-        }
+//    @GetMapping("/admin/call-next/{serviceId}")
+//    public String callNextToken(@PathVariable Long serviceId,
+//                                HttpSession session,
+//                                Model model) {
+//
+//        if (session.getAttribute("admin") == null) {
+//            return "redirect:/admin/login";
+//        }
+//
+//        ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
+//
+//        if (service == null) {
+//            return "redirect:/adminDashboard";
+//        }
+//
+//        Token nextToken = null;
+//
+//        // Priority 1: DISABLED
+//        nextToken = tokenRepository
+//                .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+//                        service, "WAITING", "DISABLED")
+//                .orElse(null);
+//
+//        // Priority 2: SENIOR
+//        if (nextToken == null) {
+//            nextToken = tokenRepository
+//                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+//                            service, "WAITING", "SENIOR")
+//                    .orElse(null);
+//        }
+//
+//        // Priority 3: NORMAL
+//        if (nextToken == null) {
+//            nextToken = tokenRepository
+//                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+//                            service, "WAITING", "NORMAL")
+//                    .orElse(null);
+//        }
+//        if (nextToken != null) {
+//
+//            // Find available OPEN counter for this service
+//            Counter counter = counterRepository
+//                    .findFirstByServiceAndStatus(service, "OPEN")
+//                    .orElse(null);
+//
+//            if (counter != null) {
+//                nextToken.setStatus("CALLED");
+//                nextToken.setCounter(counter);  // Assign counter
+//                tokenRepository.save(nextToken);
+//
+//                model.addAttribute("calledToken", nextToken);
+//                model.addAttribute("counterName", counter.getCounterName());
+//            } else {
+//                model.addAttribute("message", "No open counter available.");
+//            }
+//
+//        } else {
+//            model.addAttribute("message", "No tokens in queue.");
+//        }
+//        model.addAttribute("service", service);
+//        return "callResult";
+//    }
+    
+    @GetMapping("/call/{serviceId}")
+    public String callNextToken(@PathVariable Long serviceId, Model model) {
 
         ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
 
-        if (service == null) {
-            return "redirect:/adminDashboard";
-        }
+        Token nextToken = tokenRepository
+                .findTopByServiceAndStatusOrderByIdAsc(service, "WAITING");
 
-        Token nextToken = null;
-
-        // Priority 1: DISABLED
-        nextToken = tokenRepository
-                .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
-                        service, "WAITING", "DISABLED")
-                .orElse(null);
-
-        // Priority 2: SENIOR
-        if (nextToken == null) {
-            nextToken = tokenRepository
-                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
-                            service, "WAITING", "SENIOR")
-                    .orElse(null);
-        }
-
-        // Priority 3: NORMAL
-        if (nextToken == null) {
-            nextToken = tokenRepository
-                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
-                            service, "WAITING", "NORMAL")
-                    .orElse(null);
-        }
         if (nextToken != null) {
-
-            // Find available OPEN counter for this service
-            Counter counter = counterRepository
-                    .findFirstByServiceAndStatus(service, "OPEN")
-                    .orElse(null);
-
-            if (counter != null) {
-                nextToken.setStatus("CALLED");
-                nextToken.setCounter(counter);  // Assign counter
-                tokenRepository.save(nextToken);
-
-                model.addAttribute("calledToken", nextToken);
-                model.addAttribute("counterName", counter.getCounterName());
-            } else {
-                model.addAttribute("message", "No open counter available.");
-            }
-
-        } else {
-            model.addAttribute("message", "No tokens in queue.");
+            nextToken.setStatus("CALLED");
+            tokenRepository.save(nextToken);
         }
-        model.addAttribute("service", service);
-        return "callResult";
+
+        return "admin-dashboard";
     }
-    
     
     @GetMapping("/admin/complete/{tokenId}")
     public String completeToken(@PathVariable Long tokenId,
@@ -148,5 +173,18 @@ public class adminController {
             tokenRepository.save(token);
         }
         return "redirect:/adminDashboard";
+    }
+    
+    @GetMapping("/complete/{id}")
+    public String completeToken(@PathVariable Long id) {
+
+        Token token = tokenRepository.findById(id).orElse(null);
+
+        if (token != null) {
+            token.setStatus("COMPLETED");
+            tokenRepository.save(token);
+        }
+
+        return "redirect:/admin/dashboard";
     }
 }

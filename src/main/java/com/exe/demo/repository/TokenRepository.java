@@ -19,10 +19,16 @@ Optional<Token> findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
 );
 
     Token findTopByStatusOrderByIdDesc(String status);
+    Token findTopByStatusOrderByIdAsc(String status);
+    Token findTopByServiceAndStatusOrderByIdAsc(ServiceEntity service, String status);
 
     List<Token> findTop3ByStatusOrderByIdAsc(String status);
 
     long countByStatusAndServiceIdAndIdLessThan(String status, Long serviceId, Long id);
 
     Token findByTokenNumber(String tokenNumber);
+   
+    long countByStatus(String status);
+
+    long count();
 }
