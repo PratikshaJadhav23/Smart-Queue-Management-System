@@ -22,25 +22,20 @@ public class PublicController {
     public String checkStatus(@RequestParam String tokenNumber, Model model) {
 
         Token token = tokenRepository.findByTokenNumber(tokenNumber);
+         if (tokenNumber == null || tokenNumber.isEmpty()) {
+                model.addAttribute("error", "Token number cannot be empty.");
+                return "token-status-form";
+            }
 
-        if (token == null) {
-            model.addAttribute("error", "Invalid Token Number");
-            return "token-status-form";
+            Token token1 = tokenRepository.findByTokenNumber(tokenNumber);
+
+            if (token1 == null) {
+                model.addAttribute("error", "Invalid Token Number.");
+                return "token-status-form";
+            }
+
+            model.addAttribute("token", token1);
+            return "token-status";
         }
-
-        long position = tokenRepository
-                .countByStatusAndServiceIdAndIdLessThan(
-                        "WAITING",
-                        token.getService().getId(),
-                        token.getId()
-                );
-
-        int estimatedTime = (int) position * 5; // 5 minutes per token
-
-        model.addAttribute("token", token);
-        model.addAttribute("position", position + 1);
-        model.addAttribute("estimatedTime", estimatedTime);
-
-        return "token-status";
-    }
+    
 }

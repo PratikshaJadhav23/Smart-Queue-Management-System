@@ -1,41 +1,203 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Service List</title>
+<meta charset="UTF-8">
+<title>Service List - Smart Queue</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background-color:#eef2f7;
+}
+
+/* Top tricolor strip */
+.top-strip{
+    background: linear-gradient(to right, #ff9933, white, #138808);
+    height:6px;
+}
+
+/* Header */
+header{
+    background:white;
+    padding:15px 40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #ddd;
+}
+
+header img{
+    width:60px;
+}
+
+.site-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#0b3d91;
+}
+
+.subtitle{
+    font-size:14px;
+    color:#555;
+}
+
+/* Section */
+.section{
+    padding:50px 40px;
+}
+
+/* Page Heading */
+.section h2{
+    color:#0b3d91;
+    margin-bottom:20px;
+}
+
+/* Add Button */
+.add-btn{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:8px 16px;
+    background:#ff9933;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    font-weight:500;
+}
+
+.add-btn:hover{
+    background:#e67e00;
+}
+
+/* Table Styling */
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+th{
+    background:#0b3d91;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border:1px solid #ddd;
+}
+
+tr:nth-child(even){
+    background:#f9f9f9;
+}
+
+/* Toggle Button */
+.toggle-btn{
+    padding:6px 12px;
+    background:#0b3d91;
+    color:white;
+    text-decoration:none;
+    border-radius:4px;
+}
+
+.toggle-btn:hover{
+    background:#062c6b;
+}
+
+/* Back Link */
+.back-link{
+    display:inline-block;
+    margin-top:25px;
+    color:#0b3d91;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.back-link:hover{
+    text-decoration:underline;
+}
+
+/* Footer */
+footer{
+    background:#0b3d91;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:60px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+    .section{
+        padding:30px 15px;
+    }
+
+    table{
+        font-size:13px;
+    }
+
+    th, td{
+        padding:8px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-<h2>Government Services</h2>
+<div class="top-strip"></div>
 
-<a href="/admin/services/add">Add New Service</a>
-<br><br>
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <div>
+        <div class="site-title">Smart Queue Management System</div>
+        <div class="subtitle">Service Administration Panel</div>
+    </div>
+</header>
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Code</th>
-        <th>Avg Time</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
+<section class="section">
 
-    <tr th:each="service : ${services}">
-        <td th:text="${service.id}"></td>
-        <td th:text="${service.serviceName}"></td>
-        <td th:text="${service.serviceCode}"></td>
-        <td th:text="${service.avgServiceTime}"></td>
-        <td th:text="${service.status ? 'Active' : 'Inactive'}"></td>
-        <td>
-            <a th:href="@{'/admin/services/toggle/' + ${service.id}}">
-                Toggle Status
-            </a>
-        </td>
-    </tr>
-</table>
+    <h2>Government Services</h2>
 
-<br>
-<a href="/adminDashboard">Back to Dashboard</a>
+    <a href="/admin/services/add" class="add-btn">+ Add New Service</a>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Avg Time</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        <tr th:each="service : ${services}">
+            <td th:text="${service.id}"></td>
+            <td th:text="${service.serviceName}"></td>
+            <td th:text="${service.serviceCode}"></td>
+            <td th:text="${service.avgServiceTime}"></td>
+            <td th:text="${service.status ? 'Active' : 'Inactive'}"></td>
+            <td>
+                <a class="toggle-btn"
+                   th:href="@{'/admin/services/toggle/' + ${service.id}}">
+                    Toggle Status
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <a href="/adminDashboard" class="back-link">← Back to Dashboard</a>
+
+</section>
+
+<footer>
+    © 2026 Government of India | Smart Queue Management System
+</footer>
 
 </body>
 </html>

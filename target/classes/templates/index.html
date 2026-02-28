@@ -1,14 +1,214 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Smart Queue Management</title>
+<title>Smart Queue Management System</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color:#fdf6ec;
+}
+
+/* Top strip */
+.top-strip{
+    background:linear-gradient(to right, #ff9933, white, #138808);
+    height:6px;
+}
+
+/* Header */
+header{
+    background:#a52a2a;
+    color:white;
+    padding:18px 40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+header img{
+    width:55px;
+}
+
+.site-title{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.subtitle{
+    font-size:14px;
+    opacity:0.9;
+}
+
+/* Navigation */
+nav{
+    background:#7b1e1e;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 20px;
+    font-weight:500;
+}
+
+nav a:hover{
+    color:#ffd700;
+}
+
+/* Hero Section */
+.hero{
+    background:#c75b12;
+    color:white;
+    text-align:center;
+    padding:70px 20px;
+}
+
+.hero h1{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:18px;
+}
+
+/* Services Section */
+.section{
+    padding:50px 30px;
+    text-align:center;
+}
+
+.section h2{
+    color:#7b1e1e;
+    margin-bottom:30px;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:white;
+    width:260px;
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    border-top:5px solid #c75b12;
+}
+
+.card h3{
+    color:#7b1e1e;
+}
+
+.card p{
+    font-size:14px;
+    color:#555;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:9px 18px;
+    background:#7b1e1e;
+    color:white;
+    text-decoration:none;
+    border-radius:4px;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#5a1414;
+}
+
+/* Announcement */
+.notice{
+    background:#fff3e0;
+    padding:25px;
+    margin:40px;
+    border-left:6px solid #c75b12;
+    font-size:15px;
+}
+
+/* Footer */
+footer{
+    background:#7b1e1e;
+    color:white;
+    text-align:center;
+    padding:18px;
+    margin-top:30px;
+}
+
+</style>
 </head>
+
 <body>
-<h1>Hello to all</h1>
-<a href="/officer-login">Officer Login</a><br><br>
-<a href="/register">Customer Register</a><br><br>
-<a href="/login">Customer Login</a><br><br>
-<a href="/admin/login">Admin Login </a>
+
+<div class="top-strip"></div>
+
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <div>
+        <div class="site-title">Smart Queue Management System</div>
+        <div class="subtitle">Digital Governance Service Portal</div>
+    </div>
+</header>
+
+<nav>
+    <a href="/">Home</a>
+   <a href="/register">Customer Register</a>
+    <a href="/login">Customer Login</a>
+    <a href="/admin/login">Officer Login</a>
+</nav>
+
+<section class="hero">
+    <h1>Serving Citizens with Efficiency</h1>
+    <p>Reduce waiting time. Improve transparency. Experience digital governance.</p>
+</section>
+
+<section class="section">
+    <h2>Available Services</h2>
+
+    <div class="cards">
+
+        <div class="card" th:each="service : ${services}">
+            
+            <h3 th:text="${service.serviceName}">Service Name</h3>
+            
+            <p>
+                Service Code: 
+                <span th:text="${service.serviceCode}"></span>
+            </p>
+
+            <p>
+                Avg Time: 
+                <span th:text="${service.avgServiceTime}"></span> minutes
+            </p>
+
+            <a th:href="@{/login}" class="btn">Generate Token</a>
+
+        </div>
+
+    </div>
+</section>
+
+<div class="notice">
+    <strong>Public Notice:</strong>  
+    Citizens are requested to carry valid ID proof while visiting the government office. Online token booking is recommended to avoid delays.
+</div>
+
+<footer>
+    © 2026 Government of India | Smart Queue Management System  
+    <br>
+    Ministry of Digital Public Services
+</footer>
+
 </body>
 </html>

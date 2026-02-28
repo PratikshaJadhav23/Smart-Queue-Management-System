@@ -1,65 +1,210 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Admin Dashboard</title>
+<meta charset="UTF-8">
+<title>Admin Dashboard - Smart Queue</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background-color:#eef2f7;
+    padding:40px;
+}
+
+/* Main Heading */
+h2{
+    color:#0b3d91;
+    font-weight:bold;
+}
+
+/* Section Headings */
+h3{
+    color:#0b3d91;
+    margin-top:30px;
+}
+
+/* Logout Button */
+a[href="/admin/logout"]{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:8px 16px;
+    background:#ff9933;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+    font-weight:500;
+}
+
+a[href="/admin/logout"]:hover{
+    background:#e67e00;
+}
+
+/* Main Action Links */
+a[href="/admin/services"],
+a[href="/admin/counters"],
+a[href^="/admin/complete"]{
+    display:inline-block;
+    margin:10px 10px 20px 0;
+    padding:8px 16px;
+    background:#0b3d91;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+a[href="/admin/services"]:hover,
+a[href="/admin/counters"]:hover,
+a[href^="/admin/complete"]:hover{
+    background:#062c6b;
+}
+
+/* Tables */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+    background:white;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+th{
+    background:#0b3d91;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+}
+
+table, th, td{
+    border:1px solid #ddd;
+}
+
+/* Call Next Button */
+a[href^="/admin/call-next"]{
+    padding:6px 12px;
+    background:#ff9933;
+    color:white;
+    text-decoration:none;
+    border-radius:4px;
+}
+
+a[href^="/admin/call-next"]:hover{
+    background:#e67e00;
+}
+
+/* Message */
+p[style]{
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    body{
+        padding:20px;
+    }
+    table{
+        font-size:14px;
+    }
+    a{
+        display:block;
+        width:fit-content;
+        margin-bottom:10px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-<h2>Welcome Admin</h2>
+<div class="top-strip"></div>
 
-<a href="/admin/logout">Logout</a>
+<header>
+    <div class="logo-section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+        <div>
+            <div class="site-title">Smart Queue Management System</div>
+            <div class="subtitle">Admin Dashboard</div>
+        </div>
+    </div>
+</header>
 
-<br><br>
+<nav>
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/services">Manage Services</a>
+    <a href="/admin/counters">Manage Counters</a>
+    <a href="/admin/logout">Logout</a>
+</nav>
 
-<h3>Queue Management Dashboard</h3>
+<section class="section">
 
-<ul>
-    <li>Manage Services</li>
-    <li>Manage Counters</li>
-    <li>View Tokens</li>
-</ul>
-<a href="/admin/services">Manage Services</a>
+    <p style="color:red;" th:text="${message}"></p>
 
-<br><BR>
-<h3>Call Next Token</h3>
+    <h2 style="color:#0b3d91;">Queue Management Controls</h2>
 
-<table border="1">
-    <tr>
-        <th>Service</th>
-        <th>Action</th>
-    </tr>
+    <div class="cards">
+        <div class="card">
+            <h3>Manage Services</h3>
+            <a href="/admin/services">Open</a>
+        </div>
 
-    <tr th:each="service : ${services}">
-        <td th:text="${service.serviceName}"></td>
-        <td>
-            <a th:href="@{'/admin/call-next/' + ${service.id}}">
-                Call Next
-            </a>
-        </td>
-    </tr>
-</table>
+        <div class="card">
+            <h3>Manage Counters</h3>
+            <a href="/admin/counters">Open</a>
+        </div>
 
-<a href="/admin/counters">Manage Counters</a>
+        <div class="card">
+            <h3>Mark Completed</h3>
+            <a th:href="@{'/admin/complete/'}">Open</a>
+        </div>
+    </div>
 
-<a th:href="@{'/admin/complete/' + ${calledToken.id}}">
-    Mark as Completed
-</a>
+    <h2 style="color:#0b3d91; margin-top:50px;">Call Next Token</h2>
 
-<h2>Daily Statistics</h2>
+    <table>
+        <tr>
+            <th>Service</th>
+            <th>Action</th>
+        </tr>
 
-<table border="1">
-    <tr>
-        <th>Total Tokens</th>
-        <th>Waiting</th>
-        <th>Called</th>
-        <th>Completed</th>
-    </tr>
-    <tr>
-        <td th:text="${total}"></td>
-        <td th:text="${waiting}"></td>
-        <td th:text="${called}"></td>
-        <td th:text="${completed}"></td>
-    </tr>
-</table>
+        <tr th:each="service : ${services}">
+            <td th:text="${service.serviceName}"></td>
+            <td>
+                <a class="btn"
+                   th:href="@{'/admin/call-next/' + ${service.id}}">
+                    Call Next
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <h2 style="color:#0b3d91; margin-top:50px;">Daily Statistics</h2>
+
+    <table>
+        <tr>
+            <th>Total Tokens</th>
+            <th>Waiting</th>
+            <th>Called</th>
+            <th>Completed</th>
+        </tr>
+        <tr>
+            <td th:text="${total}"></td>
+            <td th:text="${waiting}"></td>
+            <td th:text="${called}"></td>
+            <td th:text="${completed}"></td>
+        </tr>
+    </table>
+
+</section>
+
+<footer>
+    © 2026 Government of India | Smart Queue Management System
+</footer>
+
 </body>
 </html>

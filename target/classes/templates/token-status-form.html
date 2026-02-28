@@ -2,17 +2,84 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Check Token Status</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #1e3c72;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 5px rgba(42, 82, 152, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #2a5298;
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+
 </head>
 <body>
 
-<h2>Check Your Token Status</h2>
+<div class="container">
 
-<form method="post" action="/token/status">
-    <input type="text" name="tokenNumber" placeholder="Enter Token Number" required>
-    <button type="submit">Check</button>
-</form>
+    <h2>Check Your Token Status</h2>
 
-<p th:text="${error}" style="color:red;"></p>
+    <form method="post" action="/token/status">
+        <input type="text" name="tokenNumber" placeholder="Enter Token Number" required>
+        <button type="submit">Check</button>
+    </form>
+
+    <p th:text="${error}" style="color:red;"></p>
+
+</div>
 
 </body>
 </html>

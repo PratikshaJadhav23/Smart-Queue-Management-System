@@ -1,50 +1,238 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Counters</title>
+    <title>Manage Counters - Smart Queue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+        }
+
+        /* HEADER */
+        .header{
+            background:#0b3d91;
+            color:white;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+        }
+
+        .header h1{
+            font-size:22px;
+        }
+
+        .header a{
+            color:white;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        /* CONTAINER */
+        .container{
+            width:95%;
+            max-width:1200px;
+            margin:30px auto;
+        }
+
+        h2{
+            color:#0b3d91;
+            margin-bottom:20px;
+        }
+
+        /* CARD */
+        .card{
+            background:white;
+            padding:25px;
+            border-radius:8px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom:30px;
+        }
+
+        /* FORM */
+        form{
+            display:flex;
+            flex-wrap:wrap;
+            gap:15px;
+            align-items:center;
+        }
+
+        input, select{
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            min-width:200px;
+        }
+
+        button{
+            background:#0b3d91;
+            color:white;
+            border:none;
+            padding:10px 20px;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#082c6c;
+        }
+
+        /* TABLE */
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
+        }
+
+        th{
+            background:#0b3d91;
+            color:white;
+            padding:12px;
+            text-align:left;
+        }
+
+        td{
+            padding:12px;
+            border-bottom:1px solid #ddd;
+        }
+
+        tr:hover{
+            background:#f1f5ff;
+        }
+
+        .toggle-btn{
+            background:#28a745;
+            padding:6px 12px;
+            color:white;
+            border-radius:4px;
+            text-decoration:none;
+        }
+
+        .toggle-btn:hover{
+            background:#1e7e34;
+        }
+
+        .back-link{
+            display:inline-block;
+            margin-top:20px;
+            color:#0b3d91;
+            font-weight:bold;
+            text-decoration:none;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:768px){
+            form{
+                flex-direction:column;
+                align-items:stretch;
+            }
+
+            table, thead, tbody, th, td, tr{
+                display:block;
+            }
+
+            thead{
+                display:none;
+            }
+
+            tr{
+                margin-bottom:15px;
+                background:white;
+                padding:15px;
+                border-radius:6px;
+                box-shadow:0 2px 6px rgba(0,0,0,0.08);
+            }
+
+            td{
+                border:none;
+                padding:8px 0;
+            }
+
+            td::before{
+                content: attr(data-label);
+                font-weight:bold;
+                display:block;
+                color:#0b3d91;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Manage Counters</h2>
+<!-- HEADER -->
+<div class="header">
+    <h1>Smart Queue Management System</h1>
+    <a href="/admin/dashboard">Back to Dashboard</a>
+</div>
 
-<form method="post" action="/admin/counters/add">
+<div class="container">
 
-    <input type="text" name="counterName" placeholder="Counter Name" required>
+    <h2>Manage Counters</h2>
 
-    <select name="serviceId" required>
-        <option th:each="service : ${services}"
-                th:value="${service.id}"
-                th:text="${service.serviceName}">
-        </option>
-    </select>
+    <!-- ADD COUNTER CARD -->
+    <div class="card">
+        <h3>Add New Counter</h3>
+        <br>
 
-    <button type="submit">Add Counter</button>
-</form>
+        <form method="post" action="/admin/counters/add">
 
-<br><br>
+            <input type="text" name="counterName" placeholder="Counter Name" required>
 
-<table border="1">
-    <tr>
-        <th>Counter</th>
-        <th>Service</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
+            <select name="serviceId" required>
+                <option value="">Select Service</option>
+                <option th:each="service : ${services}"
+                        th:value="${service.id}"
+                        th:text="${service.serviceName}">
+                </option>
+            </select>
 
-    <tr th:each="counter : ${counters}">
-        <td th:text="${counter.counterName}"></td>
-        <td th:text="${counter.service.serviceName}"></td>
-        <td th:text="${counter.status}"></td>
-        <td>
-            <a th:href="@{'/admin/counters/toggle/' + ${counter.id}}">
-                Toggle
-            </a>
-        </td>
-    </tr>
-</table>
+            <button type="submit">Add Counter</button>
+        </form>
+    </div>
 
-<br>
-<a href="/admin/dashboard">Back</a>
+    <!-- COUNTERS TABLE -->
+    <div class="card">
+        <h3>Existing Counters</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Counter</th>
+                    <th>Service</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="counter : ${counters}">
+                    <td data-label="Counter" th:text="${counter.counterName}"></td>
+                    <td data-label="Service" th:text="${counter.service.serviceName}"></td>
+                    <td data-label="Status" th:text="${counter.status}"></td>
+                    <td data-label="Action">
+                        <a class="toggle-btn"
+                           th:href="@{'/admin/counters/toggle/' + ${counter.id}}">
+                            Toggle
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="/admin/dashboard" class="back-link">← Back to Dashboard</a>
+    </div>
+
+</div>
 
 </body>
 </html>

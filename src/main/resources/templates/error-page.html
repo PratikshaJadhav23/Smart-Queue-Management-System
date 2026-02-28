@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Login - Smart Queue</title>
+<title>Error - Smart Queue</title>
 
 <style>
 
@@ -43,85 +43,46 @@ header img{
     color:#555;
 }
 
-/* Navigation */
-nav{
-    background:#0b3d91;
-    padding:12px;
-    text-align:center;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:0 18px;
-    font-weight:500;
-}
-
-nav a:hover{
-    text-decoration:underline;
-}
-
 /* Section */
 .section{
-    padding:70px 20px;
+    padding:80px 20px;
     text-align:center;
 }
 
-/* Login Card */
-.login-card{
+/* Error Card */
+.error-card{
     background:white;
-    max-width:400px;
+    max-width:500px;
     margin:auto;
-    padding:35px;
+    padding:40px;
     border-radius:12px;
     box-shadow:0 6px 18px rgba(0,0,0,0.1);
 }
 
-.login-card h2{
-    color:#0b3d91;
+.error-card h2{
+    color:#d32f2f;
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+.error-card p{
+    font-size:16px;
     margin-bottom:25px;
 }
 
-/* Form */
-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-input{
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:6px;
-    font-size:14px;
-}
-
-input:focus{
-    outline:none;
-    border-color:#0b3d91;
-}
-
 /* Button */
-button{
-    padding:10px;
-    background:#ff9933;
+.btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:#0b3d91;
     color:white;
-    border:none;
+    text-decoration:none;
     border-radius:6px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-button:hover{
-    background:#e67e00;
-}
-
-/* Error */
-.error{
-    color:red;
-    margin-top:15px;
     font-weight:500;
+}
+
+.btn:hover{
+    background:#062c6b;
 }
 
 /* Footer */
@@ -130,14 +91,13 @@ footer{
     color:white;
     text-align:center;
     padding:15px;
-    margin-top:80px;
+    margin-top:100px;
 }
 
 /* Responsive */
 @media(max-width:768px){
-    header{
-        flex-direction:column;
-        text-align:center;
+    .section{
+        padding:50px 20px;
     }
 }
 
@@ -156,30 +116,15 @@ footer{
     </div>
 </header>
 
-<nav>
-    <a href="/">Home</a>
-    <a href="/token/status">Check Status</a>
-</nav>
-
 <section class="section">
 
-    <div class="login-card">
+    <div class="error-card">
 
-        <h2>User Login</h2>
+        <h2>Error</h2>
 
-        <form action="/login" method="post">
+        <p th:text="${message}"></p>
 
-            Email:
-            <input type="email" name="email" required />
-
-            Password:
-            <input type="password" name="password" required />
-
-            <button type="submit">Login</button>
-
-        </form>
-
-        <p th:if="${error}" th:text="${error}" class="error"></p>
+        <a href="/" class="btn">Go Back to Home</a>
 
     </div>
 

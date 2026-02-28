@@ -72,5 +72,45 @@ public class TokenController {
         return "tokenSuccess";
         
 	}
+	@PostMapping("/generate")
+	public String generateToken(@RequestParam Long serviceId,
+	                            @RequestParam String priority,
+	                            Model model) {
+		 if (serviceId == null || priority == null || priority.isEmpty()) {
+		        model.addAttribute("message", "All fields are required.");
+		        return "error-page";
+		    }
+
+		    ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
+
+		    if (service == null) {
+		        model.addAttribute("message", "Invalid Service Selected.");
+		        return "error-page";
+		    }
+
+		    if (!priority.equals("NORMAL") &&
+		        !priority.equals("SENIOR") &&
+		        !priority.equals("DISABLED")) {
+
+		        model.addAttribute("message", "Invalid Priority Type.");
+		        return "error-page";
+		    }
+
+		    
+	    ServiceEntity service1 = serviceRepository.findById(serviceId).orElse(null);
+
+	    Token token = new Token();
+	    token.setService(service1);
+	    token.setStatus("WAITING");
+	    token.setPriorityType(priority);
+	    token.setTokenNumber("T" + System.currentTimeMillis());
+
+	    tokenRepository.save(token);
+
+	    model.addAttribute("token", token);
+
+	    return "token-success";
+	}
+	
 	
 }

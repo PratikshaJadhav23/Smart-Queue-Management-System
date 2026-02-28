@@ -1,18 +1,154 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Token Generated</title>
+<meta charset="UTF-8">
+<title>Token Generated - Smart Queue</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background-color:#eef2f7;
+}
+
+/* Top tricolor strip */
+.top-strip{
+    background: linear-gradient(to right, #ff9933, white, #138808);
+    height:6px;
+}
+
+/* Header */
+header{
+    background:white;
+    padding:15px 40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #ddd;
+}
+
+header img{
+    width:60px;
+}
+
+.site-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#0b3d91;
+}
+
+.subtitle{
+    font-size:14px;
+    color:#555;
+}
+
+/* Section */
+.section{
+    padding:80px 20px;
+    display:flex;
+    justify-content:center;
+}
+
+/* Success Card */
+.success-card{
+    background:white;
+    width:100%;
+    max-width:500px;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.success-card h2{
+    color:#138808;
+    margin-bottom:20px;
+}
+
+.success-card h3{
+    color:#0b3d91;
+    margin-bottom:15px;
+}
+
+.success-card p{
+    font-size:16px;
+    margin-bottom:25px;
+}
+
+/* Button */
+.btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:#ff9933;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    font-weight:500;
+}
+
+.btn:hover{
+    background:#e67e00;
+}
+
+/* Footer */
+footer{
+    background:#0b3d91;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:100px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    .section{
+        padding:50px 15px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-<h2>Your Token is Generated!</h2>
+<div class="top-strip"></div>
 
-<h3>Token Number: <span th:text="${tokenNumber}"></span></h3>
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <div>
+        <div class="site-title">Smart Queue Management System</div>
+        <div class="subtitle">Citizen Service Portal</div>
+    </div>
+</header>
 
-<p>Estimated Waiting Time: 
-   <span th:text="${estimatedTime}"></span> minutes</p>
+<section class="section">
 
-<a href="/token">Generate Another</a>
+    <div class="success-card">
+
+        <h2>Your Token is Generated!</h2>
+
+        <h3>
+            Token Number:
+            <span th:text="${tokenNumber}"></span>
+        </h3>
+
+        <p>
+            Estimated Waiting Time:
+            <strong>
+                <span th:text="${estimatedTime}"></span> minutes
+            </strong>
+        </p>
+
+        <a href="/token" class="btn">Generate Another</a>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Government of India | Smart Queue Management System
+</footer>
 
 </body>
 </html>

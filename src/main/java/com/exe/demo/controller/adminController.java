@@ -32,6 +32,14 @@ public class adminController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	
+	 @GetMapping("/")
+	    public String homePage(Model model) {
+
+	        model.addAttribute("services", serviceRepository.findByStatusTrue());
+
+	        return "index";   // index.html
+	    }
 	@GetMapping("/admin/login")
 	private String showLogin() {
 		return "adminLogin";
@@ -82,97 +90,94 @@ public class adminController {
     }
     
     
-//    @GetMapping("/admin/call-next/{serviceId}")
-//    public String callNextToken(@PathVariable Long serviceId,
-//                                HttpSession session,
-//                                Model model) {
-//
-//        if (session.getAttribute("admin") == null) {
-//            return "redirect:/admin/login";
-//        }
-//
-//        ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
-//
-//        if (service == null) {
-//            return "redirect:/adminDashboard";
-//        }
-//
-//        Token nextToken = null;
-//
-//        // Priority 1: DISABLED
-//        nextToken = tokenRepository
-//                .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
-//                        service, "WAITING", "DISABLED")
-//                .orElse(null);
-//
-//        // Priority 2: SENIOR
-//        if (nextToken == null) {
-//            nextToken = tokenRepository
-//                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
-//                            service, "WAITING", "SENIOR")
-//                    .orElse(null);
-//        }
-//
-//        // Priority 3: NORMAL
-//        if (nextToken == null) {
-//            nextToken = tokenRepository
-//                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
-//                            service, "WAITING", "NORMAL")
-//                    .orElse(null);
-//        }
-//        if (nextToken != null) {
-//
-//            // Find available OPEN counter for this service
-//            Counter counter = counterRepository
-//                    .findFirstByServiceAndStatus(service, "OPEN")
-//                    .orElse(null);
-//
-//            if (counter != null) {
-//                nextToken.setStatus("CALLED");
-//                nextToken.setCounter(counter);  // Assign counter
-//                tokenRepository.save(nextToken);
-//
-//                model.addAttribute("calledToken", nextToken);
-//                model.addAttribute("counterName", counter.getCounterName());
-//            } else {
-//                model.addAttribute("message", "No open counter available.");
-//            }
-//
-//        } else {
-//            model.addAttribute("message", "No tokens in queue.");
-//        }
-//        model.addAttribute("service", service);
-//        return "callResult";
-//    }
+    @GetMapping("/admin/call-next/{serviceId}")
+    public String callNextToken(@PathVariable Long serviceId,
+                                HttpSession session,
+                                Model model) {
+
+        if (session.getAttribute("admin") == null) {
+            return "redirect:/admin/login";
+        }
+
+        ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
+
+        if (service == null) {
+            return "redirect:/adminDashboard";
+        }
+
+        Token nextToken = null;
+
+        // Priority 1: DISABLED
+        nextToken = tokenRepository
+                .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+                        service, "WAITING", "DISABLED")
+                .orElse(null);
+
+        // Priority 2: SENIOR
+        if (nextToken == null) {
+            nextToken = tokenRepository
+                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+                            service, "WAITING", "SENIOR")
+                    .orElse(null);
+        }
+
+        // Priority 3: NORMAL
+        if (nextToken == null) {
+            nextToken = tokenRepository
+                    .findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
+                            service, "WAITING", "NORMAL")
+                    .orElse(null);
+        }
+        if (nextToken != null) {
+
+            // Find available OPEN counter for this service
+            Counter counter = counterRepository
+                    .findFirstByServiceAndStatus(service, "OPEN")
+                    .orElse(null);
+
+            if (counter != null) {
+                nextToken.setStatus("CALLED");
+                nextToken.setCounter(counter);  // Assign counter
+                tokenRepository.save(nextToken);
+
+                model.addAttribute("calledToken", nextToken);
+                model.addAttribute("counterName", counter.getCounterName());
+            } else {
+                model.addAttribute("message", "No open counter available.");
+            }
+
+        } else {
+            model.addAttribute("message", "No tokens in queue.");
+        }
+        model.addAttribute("service", service);
+        return "callResult";
+    }
     
     @GetMapping("/call/{serviceId}")
     public String callNextToken(@PathVariable Long serviceId, Model model) {
 
-        ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
+        ServiceEntity service = serviceRepository
+                .findById(serviceId)
+                .orElse(null);
 
+        // First call SENIOR
         Token nextToken = tokenRepository
-                .findTopByServiceAndStatusOrderByIdAsc(service, "WAITING");
+                .findTopByServiceAndStatusAndPriorityTypeOrderByIdAsc(
+                        service, "WAITING", "SENIOR");
+
+        // If no senior, call NORMAL
+        if (nextToken == null) {
+            nextToken = tokenRepository
+                    .findTopByServiceAndStatusAndPriorityTypeOrderByIdAsc(
+                            service, "WAITING", "NORMAL");
+        }
 
         if (nextToken != null) {
             nextToken.setStatus("CALLED");
             tokenRepository.save(nextToken);
         }
 
-        return "admin-dashboard";
-    }
-    
-    @GetMapping("/admin/complete/{tokenId}")
-    public String completeToken(@PathVariable Long tokenId,
-                                HttpSession session) {
-        if (session.getAttribute("admin") == null) {
-            return "redirect:/admin/login";
-        }
-        Token token = tokenRepository.findById(tokenId).orElse(null);
-        if (token != null) {
-            token.setStatus("COMPLETED");
-            tokenRepository.save(token);
-        }
-        return "redirect:/adminDashboard";
+        return "adminDashboard";
     }
     
     @GetMapping("/complete/{id}")

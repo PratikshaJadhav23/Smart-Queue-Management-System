@@ -2,21 +2,192 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Login page</title>
+<title>Login - Smart Queue</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background-color:#eef2f7;
+}
+
+/* Top tricolor strip */
+.top-strip{
+    background: linear-gradient(to right, #ff9933, white, #138808);
+    height:6px;
+}
+
+/* Header */
+header{
+    background:white;
+    padding:15px 40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #ddd;
+}
+
+header img{
+    width:60px;
+}
+
+.site-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#0b3d91;
+}
+
+.subtitle{
+    font-size:14px;
+    color:#555;
+}
+
+/* Navigation */
+nav{
+    background:#0b3d91;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 18px;
+    font-weight:500;
+}
+
+nav a:hover{
+    text-decoration:underline;
+}
+
+/* Section */
+.section{
+    padding:70px 20px;
+    text-align:center;
+}
+
+/* Login Card */
+.login-card{
+    background:white;
+    max-width:400px;
+    margin:auto;
+    padding:35px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.1);
+}
+
+.login-card h2{
+    color:#0b3d91;
+    margin-bottom:25px;
+}
+
+/* Form */
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+input{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#0b3d91;
+}
+
+/* Button */
+button{
+    padding:10px;
+    background:#ff9933;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#e67e00;
+}
+
+/* Error */
+.error{
+    color:red;
+    margin-top:15px;
+    font-weight:500;
+}
+
+/* Footer */
+footer{
+    background:#0b3d91;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:80px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    header{
+        flex-direction:column;
+        text-align:center;
+    }
+}
+
+</style>
 </head>
+
 <body>
-<form action="/login" method="post">
 
-    Email:
-    <input type="email" name="email" />
+<div class="top-strip"></div>
 
-    Password:
-    <input type="password" name="password" />
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <div>
+        <div class="site-title">Smart Queue Management System</div>
+        <div class="subtitle">Government Digital Service Portal</div>
+    </div>
+</header>
 
-    <button type="submit">Login</button>
+<nav>
+    <a href="/">Home</a>
+    <a href="/token/status">Check Status</a>
+</nav>
 
-</form>
+<section class="section">
 
-<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+    <div class="login-card">
+
+        <h2>User Login</h2>
+
+        <form action="/login" method="post">
+
+            Email:
+            <input type="email" name="email" required />
+
+            Password:
+            <input type="password" name="password" required />
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <p th:if="${error}" th:text="${error}" class="error"></p>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Government of India | Smart Queue Management System
+</footer>
+
 </body>
 </html>

@@ -1,40 +1,191 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Generate Token</title>
+<meta charset="UTF-8">
+<title>Generate Token - Smart Queue</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background-color:#eef2f7;
+}
+
+/* Top tricolor strip */
+.top-strip{
+    background: linear-gradient(to right, #ff9933, white, #138808);
+    height:6px;
+}
+
+/* Header */
+header{
+    background:white;
+    padding:15px 40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #ddd;
+}
+
+header img{
+    width:60px;
+}
+
+.site-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#0b3d91;
+}
+
+.subtitle{
+    font-size:14px;
+    color:#555;
+}
+
+/* Section */
+.section{
+    padding:60px 20px;
+    display:flex;
+    justify-content:center;
+}
+
+/* Form Card */
+.form-card{
+    background:white;
+    width:100%;
+    max-width:500px;
+    padding:35px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.1);
+}
+
+.form-card h2{
+    text-align:center;
+    color:#0b3d91;
+    margin-bottom:25px;
+}
+
+/* Form Elements */
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:500;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+}
+
+input:focus, select:focus{
+    outline:none;
+    border-color:#0b3d91;
+}
+
+/* Button */
+button{
+    width:100%;
+    margin-top:25px;
+    padding:10px;
+    background:#ff9933;
+    border:none;
+    color:white;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#e67e00;
+}
+
+/* Error Message */
+.error{
+    color:red;
+    margin-top:15px;
+    text-align:center;
+    font-weight:500;
+}
+
+/* Footer */
+footer{
+    background:#0b3d91;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:80px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    .section{
+        padding:40px 15px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-<h2>Generate Token</h2>
+<div class="top-strip"></div>
 
-<form method="post" action="/token">
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <div>
+        <div class="site-title">Smart Queue Management System</div>
+        <div class="subtitle">Citizen Token Generation Portal</div>
+    </div>
+</header>
 
-    <label>Name:</label>
-    <input type="text" name="citizenName" required><br><br>
+<section class="section">
 
-    <label>Mobile:</label>
-    <input type="text" name="mobile" required><br><br>
+    <div class="form-card">
 
-    <label>Select Service:</label>
-    <select name="serviceId" required>
-        <option value="">--Select--</option>
-        <option th:each="service : ${services}"
-                th:value="${service.id}"
-                th:text="${service.serviceName}">
-        </option>
-    </select><br><br>
+        <h2>Generate Token</h2>
 
-    <label>Priority:</label>
-    <select name="priorityType">
-        <option value="NORMAL">Normal</option>
-        <option value="SENIOR">Senior Citizen</option>
-        <option value="DISABLED">Disabled</option>
-    </select><br><br>
+        <form method="post" action="/token">
 
-    <button type="submit">Generate Token</button>
-</form>
+            <label>Name:</label>
+            <input type="text" name="citizenName" required>
 
-<p style="color:red;" th:text="${error}"></p>
+            <label>Mobile:</label>
+            <input type="text" name="mobile" required>
+
+            <label>Select Service:</label>
+            <select name="serviceId" required>
+                <option value="">--Select--</option>
+                <option th:each="service : ${services}"
+                        th:value="${service.id}"
+                        th:text="${service.serviceName}">
+                </option>
+            </select>
+
+            <label>Priority:</label>
+            <select name="priorityType">
+                <option value="NORMAL">Normal</option>
+                <option value="SENIOR">Senior Citizen</option>
+                <option value="DISABLED">Disabled</option>
+            </select>
+
+            <button type="submit">Generate Token</button>
+
+        </form>
+
+        <p class="error" th:text="${error}"></p>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Government of India | Smart Queue Management System
+</footer>
 
 </body>
 </html>

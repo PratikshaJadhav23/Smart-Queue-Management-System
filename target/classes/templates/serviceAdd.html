@@ -1,28 +1,184 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Service</title>
+<meta charset="UTF-8">
+<title>Add Service - Smart Queue</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background-color:#eef2f7;
+}
+
+/* Top tricolor strip */
+.top-strip{
+    background: linear-gradient(to right, #ff9933, white, #138808);
+    height:6px;
+}
+
+/* Header */
+header{
+    background:white;
+    padding:15px 40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #ddd;
+}
+
+header img{
+    width:60px;
+}
+
+.site-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#0b3d91;
+}
+
+.subtitle{
+    font-size:14px;
+    color:#555;
+}
+
+/* Section */
+.section{
+    padding:60px 20px;
+    display:flex;
+    justify-content:center;
+}
+
+/* Form Card */
+.form-card{
+    background:white;
+    width:100%;
+    max-width:500px;
+    padding:35px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.1);
+}
+
+.form-card h2{
+    text-align:center;
+    color:#0b3d91;
+    margin-bottom:25px;
+}
+
+/* Form Elements */
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:500;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:14px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#0b3d91;
+}
+
+/* Button */
+button{
+    width:100%;
+    margin-top:25px;
+    padding:10px;
+    background:#ff9933;
+    border:none;
+    color:white;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#e67e00;
+}
+
+/* Back Link */
+.back-link{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#0b3d91;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.back-link:hover{
+    text-decoration:underline;
+}
+
+/* Footer */
+footer{
+    background:#0b3d91;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:80px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    .section{
+        padding:40px 15px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-<h2>Add Government Service</h2>
+<div class="top-strip"></div>
 
-<form method="post" action="/admin/services/add">
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <div>
+        <div class="site-title">Smart Queue Management System</div>
+        <div class="subtitle">Admin Service Management</div>
+    </div>
+</header>
 
-    <label>Service Name:</label>
-    <input type="text" name="serviceName" required><br><br>
+<section class="section">
 
-    <label>Service Code:</label>
-    <input type="text" name="serviceCode" required><br><br>
+    <div class="form-card">
 
-    <label>Average Service Time (minutes):</label>
-    <input type="number" name="avgServiceTime" required><br><br>
+        <h2>Add Government Service</h2>
 
-    <button type="submit">Add Service</button>
-</form>
+        <form method="post" action="/admin/services/add">
 
-<br>
-<a href="/admin/services">Back</a>
+            <label>Service Name:</label>
+            <input type="text" name="serviceName" required>
+
+            <label>Service Code:</label>
+            <input type="text" name="serviceCode" required>
+
+            <label>Average Service Time (minutes):</label>
+            <input type="number" name="avgServiceTime" required>
+
+            <button type="submit">Add Service</button>
+
+        </form>
+
+        <a href="/admin/services" class="back-link">← Back</a>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Government of India | Smart Queue Management System
+</footer>
 
 </body>
 </html>
