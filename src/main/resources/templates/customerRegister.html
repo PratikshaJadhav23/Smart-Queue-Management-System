@@ -2,108 +2,242 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Registration Form</title>
-<style type="text/css">
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+<title>Customer Registration | Smart Queue</title>
+
+<style>
+
+/* ---------- GLOBAL ---------- */
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background-color:#fdf6ec;
 }
 
-/* Background */
-body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+/* Top strip */
+.top-strip{
+    background:linear-gradient(to right, #ff9933, white, #138808);
+    height:6px;
 }
 
-/* Form Container */
-form {
-    background: #ffffff;
-    padding: 40px 35px;
-    width: 350px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+/* Header */
+header{
+    background:#a52a2a;
+    color:white;
+    padding:18px 40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
 }
 
-/* Form Heading (Optional if you add h2) */
-form h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #333;
+header img{
+    width:55px;
 }
 
-/* Labels */
-form label {
-    font-weight: 600;
-    margin-bottom: 6px;
-    display: block;
-    color: #444;
+.site-title{
+    font-size:24px;
+    font-weight:bold;
 }
 
-/* Inputs */
-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 18px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    transition: 0.3s;
+.subtitle{
+    font-size:14px;
+    opacity:0.9;
 }
 
-/* Input Focus Effect */
-form input:focus {
-    border-color: #667eea;
-    outline: none;
-    box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+/* Navigation */
+nav{
+    background:#7b1e1e;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 20px;
+    font-weight:500;
+}
+
+nav a:hover{
+    color:#ffd700;
+}
+
+/* ---------- FORM SECTION ---------- */
+
+.form-section{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:60px 20px;
+}
+
+.form-card{
+    background:white;
+    width:400px;
+    padding:35px;
+    border-radius:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    border-top:6px solid #c75b12;
+}
+
+.form-card h2{
+    text-align:center;
+    color:#7b1e1e;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    font-weight:500;
+    display:block;
+    margin-bottom:6px;
+}
+
+.form-group input{
+    width:100%;
+    padding:10px;
+    border-radius:4px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+
+.form-group input:focus{
+    outline:none;
+    border-color:#c75b12;
 }
 
 /* Button */
-form button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    background: #667eea;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
+.btn{
+    width:100%;
+    padding:10px;
+    background:#7b1e1e;
+    color:white;
+    border:none;
+    border-radius:4px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-/* Button Hover */
-form button:hover {
-    background: #5a67d8;
+.btn:hover{
+    background:#5a1414;
 }
 
-/* Responsive */
-@media (max-width: 400px) {
-    form {
-        width: 90%;
-        padding: 30px 20px;
+/* Messages */
+.error{
+    color:red;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.success{
+    color:green;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+/* Footer */
+footer{
+    background:#7b1e1e;
+    color:white;
+    text-align:center;
+    padding:18px;
+    margin-top:40px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:480px){
+
+    header{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .form-card{
+        width:100%;
+    }
+
+    nav a{
+        display:block;
+        margin:10px 0;
     }
 }
+
 </style>
 </head>
+
 <body>
-<form th:action="@{/register}" th:object="${customer}" method="post">
 
-    Name:
-    <input type="text" th:field="*{fullName}" />
+<div class="top-strip"></div>
 
-    Email:
-    <input type="email" th:field="*{email}" />
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <div>
+        <div class="site-title">Smart Queue Management System</div>
+        <div class="subtitle">Digital Governance Service Portal</div>
+    </div>
+</header>
 
-    Password:
-    <input type="password" th:field="*{password}" />
+<nav>
+    <a href="/">Home</a>
+    <a href="/customer/register">Customer Register</a>
+    <a href="/customer/login">Customer Login</a>
+    <a href="/admin/login">Officer Login</a>
+</nav>
 
-    <button type="submit">Register</button>
-</form>
+<section class="form-section">
+
+    <div class="form-card">
+
+        <h2>Customer Registration</h2>
+
+        <p class="error" th:text="${error}"></p>
+        <p class="success" th:text="${success}"></p>
+
+        <form th:action="@{/customer/register}" method="post" th:object="${customer}">
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" th:field="*{fullName}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" th:field="*{email}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" th:field="*{password}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mobile</label>
+                <input type="text" th:field="*{mobile}" required>
+            </div>
+
+            <button type="submit" class="btn">Register</button>
+
+        </form>
+
+        <p style="text-align:center; margin-top:15px;">
+            Already have an account? 
+            <a href="/customer/login" style="color:#7b1e1e; font-weight:bold;">
+                Login
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Government of India | Smart Queue Management System  
+    <br>
+    Ministry of Digital Public Services
+</footer>
+
 </body>
 </html>

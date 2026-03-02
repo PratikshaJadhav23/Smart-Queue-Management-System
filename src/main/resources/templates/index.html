@@ -163,8 +163,8 @@ footer{
 
 <nav>
     <a href="/">Home</a>
-   <a href="/register">Customer Register</a>
-    <a href="/login">Customer Login</a>
+   <a href="/customer/register">Customer Register</a>
+    <a href="/customer/login">Customer Login</a>
     <a href="/admin/login">Officer Login</a>
 </nav>
 
@@ -172,33 +172,23 @@ footer{
     <h1>Serving Citizens with Efficiency</h1>
     <p>Reduce waiting time. Improve transparency. Experience digital governance.</p>
 </section>
-
 <section class="section">
     <h2>Available Services</h2>
-
     <div class="cards">
-
         <div class="card" th:each="service : ${services}">
-            
             <h3 th:text="${service.serviceName}">Service Name</h3>
-            
             <p>
                 Service Code: 
                 <span th:text="${service.serviceCode}"></span>
             </p>
-
             <p>
                 Avg Time: 
                 <span th:text="${service.avgServiceTime}"></span> minutes
             </p>
-
             <a th:href="@{/login}" class="btn">Generate Token</a>
-
         </div>
-
     </div>
 </section>
-
 <div class="notice">
     <strong>Public Notice:</strong>  
     Citizens are requested to carry valid ID proof while visiting the government office. Online token booking is recommended to avoid delays.
@@ -209,6 +199,5 @@ footer{
     <br>
     Ministry of Digital Public Services
 </footer>
-
 </body>
 </html>

@@ -2,75 +2,123 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Admin Dashboard - Smart Queue</title>
+<title>Admin Dashboard | Smart Queue</title>
 
 <style>
 
+/* ---------- GLOBAL ---------- */
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background-color:#eef2f7;
-    padding:40px;
+    background-color:#fdf6ec;
 }
 
-/* Main Heading */
-h2{
-    color:#0b3d91;
+/* Top Strip */
+.top-strip{
+    background:linear-gradient(to right, #ff9933, white, #138808);
+    height:6px;
+}
+
+/* Header */
+header{
+    background:#a52a2a;
+    color:white;
+    padding:18px 40px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+header img{
+    width:55px;
+}
+
+.site-title{
+    font-size:24px;
     font-weight:bold;
 }
 
-/* Section Headings */
-h3{
-    color:#0b3d91;
-    margin-top:30px;
+.subtitle{
+    font-size:14px;
+    opacity:0.9;
 }
 
-/* Logout Button */
-a[href="/admin/logout"]{
-    display:inline-block;
-    margin-bottom:20px;
-    padding:8px 16px;
-    background:#ff9933;
+/* Navigation */
+nav{
+    background:#7b1e1e;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
     color:white;
     text-decoration:none;
-    border-radius:5px;
+    margin:0 20px;
     font-weight:500;
 }
 
-a[href="/admin/logout"]:hover{
-    background:#e67e00;
+nav a:hover{
+    color:#ffd700;
 }
 
-/* Main Action Links */
-a[href="/admin/services"],
-a[href="/admin/counters"],
-a[href^="/admin/complete"]{
+/* Section */
+.section{
+    padding:50px 30px;
+}
+
+.section h2{
+    color:#7b1e1e;
+    margin-bottom:20px;
+}
+
+/* Cards */
+.cards{
+    display:flex;
+    gap:25px;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+}
+
+.card{
+    background:white;
+    width:260px;
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    border-top:5px solid #c75b12;
+    text-align:center;
+}
+
+.card h3{
+    color:#7b1e1e;
+}
+
+.card a{
     display:inline-block;
-    margin:10px 10px 20px 0;
+    margin-top:15px;
     padding:8px 16px;
-    background:#0b3d91;
+    background:#7b1e1e;
     color:white;
     text-decoration:none;
-    border-radius:5px;
+    border-radius:4px;
+    font-weight:bold;
 }
 
-a[href="/admin/services"]:hover,
-a[href="/admin/counters"]:hover,
-a[href^="/admin/complete"]:hover{
-    background:#062c6b;
+.card a:hover{
+    background:#5a1414;
 }
 
 /* Tables */
 table{
     width:100%;
     border-collapse:collapse;
-    margin-top:15px;
+    margin-top:20px;
     background:white;
     box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
 th{
-    background:#0b3d91;
+    background:#7b1e1e;
     color:white;
     padding:12px;
 }
@@ -84,39 +132,57 @@ table, th, td{
     border:1px solid #ddd;
 }
 
-/* Call Next Button */
-a[href^="/admin/call-next"]{
+/* Buttons inside table */
+.btn{
     padding:6px 12px;
-    background:#ff9933;
+    background:#c75b12;
     color:white;
     text-decoration:none;
     border-radius:4px;
 }
 
-a[href^="/admin/call-next"]:hover{
-    background:#e67e00;
+.btn:hover{
+    background:#a94c0e;
 }
 
 /* Message */
-p[style]{
+.message{
+    color:red;
     font-weight:bold;
     margin-bottom:15px;
 }
 
+/* Footer */
+footer{
+    background:#7b1e1e;
+    color:white;
+    text-align:center;
+    padding:18px;
+    margin-top:50px;
+}
+
 /* Responsive */
 @media(max-width:768px){
-    body{
-        padding:20px;
+
+    header{
+        flex-direction:column;
+        text-align:center;
     }
+
+    nav a{
+        display:block;
+        margin:10px 0;
+    }
+
+    .cards{
+        justify-content:center;
+    }
+
     table{
         font-size:14px;
     }
-    a{
-        display:block;
-        width:fit-content;
-        margin-bottom:10px;
-    }
 }
+
 </style>
 </head>
 
@@ -125,12 +191,10 @@ p[style]{
 <div class="top-strip"></div>
 
 <header>
-    <div class="logo-section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
-        <div>
-            <div class="site-title">Smart Queue Management System</div>
-            <div class="subtitle">Admin Dashboard</div>
-        </div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+    <div>
+        <div class="site-title">Smart Queue Management System</div>
+        <div class="subtitle">Admin Dashboard</div>
     </div>
 </header>
 
@@ -143,9 +207,9 @@ p[style]{
 
 <section class="section">
 
-    <p style="color:red;" th:text="${message}"></p>
+    <p class="message" th:text="${message}"></p>
 
-    <h2 style="color:#0b3d91;">Queue Management Controls</h2>
+    <h2>Queue Management Controls</h2>
 
     <div class="cards">
         <div class="card">
@@ -164,7 +228,7 @@ p[style]{
         </div>
     </div>
 
-    <h2 style="color:#0b3d91; margin-top:50px;">Call Next Token</h2>
+    <h2>Call Next Token</h2>
 
     <table>
         <tr>
@@ -183,7 +247,7 @@ p[style]{
         </tr>
     </table>
 
-    <h2 style="color:#0b3d91; margin-top:50px;">Daily Statistics</h2>
+    <h2 style="margin-top:50px;">Daily Statistics</h2>
 
     <table>
         <tr>
