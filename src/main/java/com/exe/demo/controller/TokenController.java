@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.exe.demo.model.Customer;
 import com.exe.demo.model.ServiceEntity;
 import com.exe.demo.model.Token;
 import com.exe.demo.repository.ServiceRepository;
 import com.exe.demo.repository.TokenRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class TokenController {
@@ -30,87 +33,72 @@ public class TokenController {
 	}
 	
 	//Generated token 
-	@PostMapping("/token")
-	public String generateToken(@RequestParam String citizenName,
-            @RequestParam String mobile,
-            @RequestParam Long serviceId,
-            @RequestParam String priorityType,
-            Model model){
-		ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
-		if(service == null) {
-			model.addAttribute("error","Invalid Services");
-			return "tokenForm";
-		}
-		
-		 // Count existing WAITING tokens
-        List<Token> waitingTokens =
-                tokenRepository.findByServiceAndStatus(service, "WAITING");
-
-        int tokenCount = waitingTokens.size() + 1;
-
-        String tokenNumber = service.getServiceCode() + "-" +
-                String.format("%03d", tokenCount);
-
-        // Create token
-        Token token = new Token();
-        token.setCitizenName(citizenName);
-        token.setMobile(mobile);
-        token.setPriorityType(priorityType);
-        token.setService(service);
-        token.setStatus("WAITING");
-        token.setTokenNumber(tokenNumber);
-        token.setCreatedTime(LocalDateTime.now());
-
-        tokenRepository.save(token);
-
-        // Calculate waiting time
-        int estimatedTime = waitingTokens.size() * service.getAvgServiceTime();
-
-        model.addAttribute("tokenNumber", tokenNumber);
-        model.addAttribute("estimatedTime", estimatedTime);
-
-        return "tokenSuccess";
-        
-	}
+//	@PostMapping("/token")
+//	public String generateToken(@RequestParam String citizenName,
+//            @RequestParam String mobile,
+//            @RequestParam Long serviceId,
+//            @RequestParam String priorityType,
+//            Model model){
+//		ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
+//		if(service == null) {
+//			model.addAttribute("error","Invalid Services");
+//			return "tokenForm";
+//		}
+//		
+//		 // Count existing WAITING tokens
+//        List<Token> waitingTokens =
+//                tokenRepository.findByServiceAndStatus(service, "WAITING");
+//
+//        int tokenCount = waitingTokens.size() + 1;
+//
+//        String tokenNumber = service.getServiceCode() + "-" +
+//                String.format("%03d", tokenCount);
+//
+//        // Create token
+//        Token token = new Token();
+//        token.setCitizenName(citizenName);
+//        token.setMobile(mobile);
+//        token.setPriorityType(priorityType);
+//        token.setService(service);
+//        token.setStatus("WAITING");
+//        token.setTokenNumber(tokenNumber);
+//        token.setCreatedTime(LocalDateTime.now());
+//
+//        tokenRepository.save(token);
+//
+//        // Calculate waiting time
+//        int estimatedTime = waitingTokens.size() * service.getAvgServiceTime();
+//
+//        model.addAttribute("tokenNumber", tokenNumber);
+//        model.addAttribute("estimatedTime", estimatedTime);
+//
+//        return "tokenSuccess";
+//        
+//	}
 	@PostMapping("/generate")
 	public String generateToken(@RequestParam Long serviceId,
-	                            @RequestParam String priority,
+	                            @RequestParam String priorityType,
+	                            HttpSession session,
 	                            Model model) {
-		 if (serviceId == null || priority == null || priority.isEmpty()) {
-		        model.addAttribute("message", "All fields are required.");
-		        return "error-page";
-		    }
 
-		    ServiceEntity service = serviceRepository.findById(serviceId).orElse(null);
+	    Customer customer = (Customer) session.getAttribute("loggedInCustomer");
 
-		    if (service == null) {
-		        model.addAttribute("message", "Invalid Service Selected.");
-		        return "error-page";
-		    }
+	    if (customer == null) {
+	        return "redirect:/customer/login";
+	    }
 
-		    if (!priority.equals("NORMAL") &&
-		        !priority.equals("SENIOR") &&
-		        !priority.equals("DISABLED")) {
-
-		        model.addAttribute("message", "Invalid Priority Type.");
-		        return "error-page";
-		    }
-
-		    
-	    ServiceEntity service1 = serviceRepository.findById(serviceId).orElse(null);
+	    ServiceEntity service = serviceRepository.findById(serviceId)
+	            .orElseThrow(() -> new RuntimeException("Service not found"));
 
 	    Token token = new Token();
-	    token.setService(service1);
+	    token.setService(service);
+	    token.setCustomer(customer);
 	    token.setStatus("WAITING");
-	    token.setPriorityType(priority);
+	    token.setPriorityType(priorityType);
 	    token.setTokenNumber("T" + System.currentTimeMillis());
 
 	    tokenRepository.save(token);
-
-	    model.addAttribute("token", token);
-
-	    return "token-success";
+	    System.out.println("TOKEN SAVED SUCCESSFULLY");
+	    return "redirect:/customer/dashboard";
 	}
-	
-	
 }

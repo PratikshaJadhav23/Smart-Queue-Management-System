@@ -10,7 +10,7 @@
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background-color:#fdf6ec;
+    background-color:#eef2f7;
 }
 
 /* Top strip */
@@ -19,9 +19,9 @@ body{
     height:6px;
 }
 
-/* Header */
+/* Header - Blue Gradient Theme */
 header{
-    background:#a52a2a;
+    background: linear-gradient(to right, #4facfe, #1f3c88);
     color:white;
     padding:18px 40px;
     display:flex;
@@ -43,9 +43,9 @@ header img{
     opacity:0.9;
 }
 
-/* Navigation */
+/* Navigation - Dark Blue */
 nav{
-    background:#7b1e1e;
+    background:#162d66;
     padding:12px;
     text-align:center;
 }
@@ -55,10 +55,11 @@ nav a{
     text-decoration:none;
     margin:0 20px;
     font-weight:500;
+    transition:0.3s;
 }
 
 nav a:hover{
-    color:#ffd700;
+    color:#4facfe;
 }
 
 /* ---------- FORM SECTION ---------- */
@@ -67,24 +68,25 @@ nav a:hover{
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:70px 20px;
+    padding:80px 20px;
 }
 
 .form-card{
     background:white;
     width:380px;
-    padding:35px;
-    border-radius:10px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.15);
-    border-top:6px solid #c75b12;
+    padding:40px;
+    border-radius:16px;
+    box-shadow:0 8px 22px rgba(0,0,0,0.08);
+    border-top:6px solid #1f3c88;
 }
 
 .form-card h2{
     text-align:center;
-    color:#7b1e1e;
+    color:#1f3c88;
     margin-bottom:25px;
 }
 
+/* Form Group */
 .form-group{
     margin-bottom:18px;
 }
@@ -93,51 +95,67 @@ nav a:hover{
     font-weight:500;
     display:block;
     margin-bottom:6px;
+    color:#333;
 }
 
 .form-group input{
     width:100%;
     padding:10px;
-    border-radius:4px;
+    border-radius:6px;
     border:1px solid #ccc;
     font-size:14px;
+    transition:0.3s;
 }
 
 .form-group input:focus{
     outline:none;
-    border-color:#c75b12;
+    border-color:#1f3c88;
+    box-shadow:0 0 0 2px rgba(31,60,136,0.1);
 }
 
-/* Button */
+/* Button - Theme */
 .btn{
     width:100%;
-    padding:10px;
-    background:#7b1e1e;
+    padding:11px;
+    background:#1f3c88;
     color:white;
     border:none;
-    border-radius:4px;
+    border-radius:8px;
     font-weight:bold;
     cursor:pointer;
+    transition:0.3s;
 }
 
 .btn:hover{
-    background:#5a1414;
+    background:#162d66;
 }
 
 /* Error message */
 .error{
-    color:red;
+    color:#d32f2f;
     text-align:center;
     margin-bottom:15px;
 }
 
+/* Register Link */
+.register-link a{
+    color:#1f3c88;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.register-link a:hover{
+    text-decoration:underline;
+}
+
 /* Footer */
 footer{
-    background:#7b1e1e;
+    background:#162d66;
     color:white;
     text-align:center;
     padding:18px;
-    margin-top:40px;
+    margin-top:60px;
+    font-size:14px;
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -151,6 +169,7 @@ footer{
 
     .form-card{
         width:100%;
+        padding:30px 20px;
     }
 
     nav a{
@@ -167,6 +186,7 @@ footer{
 <div class="top-strip"></div>
 
 <header>
+    <!-- LOGO NOT REMOVED -->
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
     <div>
         <div class="site-title">Smart Queue Management System</div>
@@ -205,11 +225,9 @@ footer{
 
         </form>
 
-        <p style="text-align:center; margin-top:15px;">
+        <p class="register-link" style="text-align:center; margin-top:15px;">
             New User?
-            <a href="/customer/register" style="color:#7b1e1e; font-weight:bold;">
-                Register Here
-            </a>
+            <a href="/customer/register">Register Here</a>
         </p>
 
     </div>

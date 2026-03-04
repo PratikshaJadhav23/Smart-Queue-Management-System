@@ -3,67 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin Login - Smart Queue Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
+/* ===== GLOBAL ===== */
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background-color:#fdf6ec;
+    background-color:#f4f7fa;
 }
 
-/* Top Strip */
-.top-strip{
-    background:linear-gradient(to right, #ff9933, white, #138808);
-    height:6px;
-}
-
-/* Header */
-header{
-    background:#7b1e1e;
+/* ===== HEADER ===== */
+.header{
+    background:linear-gradient(135deg,#4facfe,#1f3c88);
     color:white;
-    padding:18px 40px;
+    padding:15px 40px;
     display:flex;
     align-items:center;
     gap:15px;
 }
 
-header img{
+.header img{
     width:50px;
 }
 
 .site-title{
-    font-size:22px;
+    font-size:20px;
     font-weight:bold;
 }
 
-/* Login Container */
+/* ===== LOGIN CONTAINER ===== */
 .login-container{
     display:flex;
     justify-content:center;
     align-items:center;
-    height:80vh;
+    height:85vh;
 }
 
-/* Login Card */
+/* ===== LOGIN CARD ===== */
 .login-card{
     background:white;
     padding:40px;
-    width:350px;
-    border-radius:8px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    border-top:6px solid #c75b12;
+    width:360px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
 .login-card h2{
     text-align:center;
-    color:#7b1e1e;
+    color:#1f3c88;
     margin-bottom:25px;
 }
 
+/* ===== FORM ===== */
 label{
-    font-weight:bold;
-    color:#555;
+    font-weight:600;
+    color:#444;
 }
 
 input{
@@ -72,43 +68,65 @@ input{
     margin-top:5px;
     margin-bottom:20px;
     border:1px solid #ccc;
-    border-radius:4px;
+    border-radius:5px;
+    transition:0.3s;
 }
 
 input:focus{
     outline:none;
-    border-color:#c75b12;
+    border-color:#1f3c88;
+    box-shadow:0 0 0 2px rgba(31,60,136,0.1);
 }
 
-/* Button */
+/* ===== BUTTON ===== */
 button{
     width:100%;
     padding:10px;
-    background:#7b1e1e;
+    background:#1f3c88;
     color:white;
     border:none;
-    border-radius:4px;
+    border-radius:5px;
     font-weight:bold;
     cursor:pointer;
+    transition:0.3s;
 }
 
 button:hover{
-    background:#5a1414;
+    background:#162d66;
 }
 
-/* Error Message */
+/* ===== ERROR ===== */
 .error{
     color:red;
     text-align:center;
     margin-top:10px;
 }
 
-/* Footer */
+/* ===== FOOTER ===== */
 footer{
-    background:#7b1e1e;
+    background:#1f3c88;
     color:white;
     text-align:center;
     padding:15px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+
+    .header{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .login-container{
+        height:auto;
+        padding:40px 20px;
+    }
+
+    .login-card{
+        width:100%;
+        max-width:350px;
+    }
 }
 
 </style>
@@ -116,13 +134,13 @@ footer{
 
 <body>
 
-<div class="top-strip"></div>
-
-<header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government Logo">
     <div class="site-title">Smart Queue Management System - Admin Portal</div>
-</header>
+</div>
 
+<!-- ===== LOGIN SECTION ===== -->
 <div class="login-container">
 
     <div class="login-card">

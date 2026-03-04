@@ -190,6 +190,6 @@ public class adminController {
             tokenRepository.save(token);
         }
 
-        return "redirect:/admin/dashboard";
+        return "redirect:/adminDashboard";
     }
 }

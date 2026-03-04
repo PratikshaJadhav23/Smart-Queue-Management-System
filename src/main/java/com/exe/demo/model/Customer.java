@@ -1,6 +1,7 @@
 package com.exe.demo.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -21,6 +22,10 @@ public class Customer {
 
     private String mobile;
 
+    // 🔥 ADD THIS RELATION
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Token> tokens;
+
     // Default Constructor
     public Customer() {}
 
@@ -33,6 +38,7 @@ public class Customer {
     }
 
     // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -71,5 +77,14 @@ public class Customer {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    // 🔥 Add Getter & Setter for tokens
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
     }
 }

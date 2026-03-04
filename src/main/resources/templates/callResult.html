@@ -198,7 +198,7 @@ footer{
                 <span th:text="${calledToken.priorityType}"></span>
             </p>
 
-            <a th:href="@{'/admin/complete/' + ${calledToken.id}}" class="btn">
+            <a th:href="@{'/complete/' + ${calledToken.id}}" class="btn">
                 Mark as Completed
             </a>
         </div>
@@ -209,7 +209,7 @@ footer{
 
         <br>
 
-        <a href="/admin/dashboard" class="btn-secondary">
+        <a href="/adminDashboard" class="btn-secondary">
             Back to Dashboard
         </a>
 

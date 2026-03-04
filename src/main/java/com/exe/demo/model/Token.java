@@ -22,6 +22,10 @@ public class Token {
 	private ServiceEntity service;
 	
 	@ManyToOne
+	@JoinColumn(name = "customer_id", nullable = false)
+	private Customer customer;
+	
+	@ManyToOne
 	@JoinColumn(name = "counter_id")
 	private Counter counter;
 
@@ -29,6 +33,15 @@ public class Token {
 	public Token() {
 		this.createdTime = LocalDateTime.now();
 	}
+	
+	public Customer getCustomer() {
+	    return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+	    this.customer = customer;
+	}
+
 	public Long getId() {
 		return id;
 	}

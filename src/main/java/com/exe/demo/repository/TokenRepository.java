@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.exe.demo.model.Customer;
 import com.exe.demo.model.ServiceEntity;
 import com.exe.demo.model.Token;
 
@@ -35,4 +36,6 @@ Optional<Token> findFirstByServiceAndStatusAndPriorityTypeOrderByCreatedTimeAsc(
     long countByStatus(String status);
 
     long count();
+
+    List<Token> findByCustomer(Customer customer);
 }

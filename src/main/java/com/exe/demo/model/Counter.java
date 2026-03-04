@@ -10,8 +10,8 @@ public class Counter {
 	
 	private String counterName;
 	
-	@ManyToOne
-	@JoinColumn(name = "service_id")
+	@ManyToOne(optional =false)
+	@JoinColumn(name = "service_id", nullable = false)
 	private ServiceEntity service;
 	
 	private String status;

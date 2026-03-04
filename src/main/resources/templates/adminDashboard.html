@@ -3,75 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin Dashboard | Smart Queue</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
-/* ---------- GLOBAL ---------- */
+/* ===== GLOBAL ===== */
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background-color:#fdf6ec;
+    background-color:#f4f7fa;
 }
 
-/* Top Strip */
-.top-strip{
-    background:linear-gradient(to right, #ff9933, white, #138808);
-    height:6px;
-}
-
-/* Header */
-header{
-    background:#a52a2a;
+/* ===== HEADER ===== */
+.header{
+    background:linear-gradient(135deg,#4facfe,#1f3c88);
     color:white;
-    padding:18px 40px;
+    padding:15px 40px;
     display:flex;
     align-items:center;
     gap:15px;
 }
 
-header img{
-    width:55px;
+.header img{
+    width:50px;
 }
 
 .site-title{
-    font-size:24px;
+    font-size:22px;
     font-weight:bold;
 }
 
 .subtitle{
-    font-size:14px;
+    font-size:13px;
     opacity:0.9;
 }
 
-/* Navigation */
-nav{
-    background:#7b1e1e;
+/* ===== NAVBAR ===== */
+.navbar{
+    background:#162d66;
     padding:12px;
     text-align:center;
 }
 
-nav a{
+.navbar a{
     color:white;
     text-decoration:none;
     margin:0 20px;
     font-weight:500;
 }
 
-nav a:hover{
-    color:#ffd700;
+.navbar a:hover{
+    text-decoration:underline;
 }
 
-/* Section */
+/* ===== SECTION ===== */
 .section{
     padding:50px 30px;
 }
 
 .section h2{
-    color:#7b1e1e;
+    color:#1f3c88;
     margin-bottom:20px;
 }
 
-/* Cards */
+/* ===== MESSAGE ===== */
+.message{
+    color:red;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+/* ===== CARDS ===== */
 .cards{
     display:flex;
     gap:25px;
@@ -83,32 +85,36 @@ nav a:hover{
     background:white;
     width:260px;
     padding:25px;
-    border-radius:8px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    border-top:5px solid #c75b12;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
     text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
 }
 
 .card h3{
-    color:#7b1e1e;
+    color:#1f3c88;
 }
 
 .card a{
     display:inline-block;
     margin-top:15px;
     padding:8px 16px;
-    background:#7b1e1e;
+    background:#1f3c88;
     color:white;
     text-decoration:none;
-    border-radius:4px;
+    border-radius:5px;
     font-weight:bold;
 }
 
 .card a:hover{
-    background:#5a1414;
+    background:#162d66;
 }
 
-/* Tables */
+/* ===== TABLE ===== */
 table{
     width:100%;
     border-collapse:collapse;
@@ -118,7 +124,7 @@ table{
 }
 
 th{
-    background:#7b1e1e;
+    background:#1f3c88;
     color:white;
     padding:12px;
 }
@@ -126,60 +132,51 @@ th{
 td{
     padding:12px;
     text-align:center;
+    border-bottom:1px solid #ddd;
 }
 
-table, th, td{
-    border:1px solid #ddd;
-}
-
-/* Buttons inside table */
+/* ===== BUTTON ===== */
 .btn{
     padding:6px 12px;
-    background:#c75b12;
+    background:#1f3c88;
     color:white;
     text-decoration:none;
     border-radius:4px;
+    font-weight:500;
 }
 
 .btn:hover{
-    background:#a94c0e;
+    background:#162d66;
 }
 
-/* Message */
-.message{
-    color:red;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-
-/* Footer */
+/* ===== FOOTER ===== */
 footer{
-    background:#7b1e1e;
+    background:#1f3c88;
     color:white;
     text-align:center;
     padding:18px;
     margin-top:50px;
 }
 
-/* Responsive */
+/* ===== RESPONSIVE ===== */
 @media(max-width:768px){
 
-    header{
+    .header{
         flex-direction:column;
         text-align:center;
     }
 
-    nav a{
+    .navbar a{
         display:block;
-        margin:10px 0;
-    }
-
-    .cards{
-        justify-content:center;
+        margin:8px 0;
     }
 
     table{
         font-size:14px;
+    }
+
+    .cards{
+        justify-content:center;
     }
 }
 
@@ -188,22 +185,22 @@ footer{
 
 <body>
 
-<div class="top-strip"></div>
-
-<header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg">
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Government Logo">
     <div>
         <div class="site-title">Smart Queue Management System</div>
         <div class="subtitle">Admin Dashboard</div>
     </div>
-</header>
+</div>
 
-<nav>
+<!-- ===== NAVIGATION ===== -->
+<div class="navbar">
     <a href="/admin/dashboard">Dashboard</a>
     <a href="/admin/services">Manage Services</a>
     <a href="/admin/counters">Manage Counters</a>
     <a href="/admin/logout">Logout</a>
-</nav>
+</div>
 
 <section class="section">
 
@@ -221,48 +218,47 @@ footer{
             <h3>Manage Counters</h3>
             <a href="/admin/counters">Open</a>
         </div>
-
-        <div class="card">
-            <h3>Mark Completed</h3>
-            <a th:href="@{'/admin/complete/'}">Open</a>
-        </div>
     </div>
 
     <h2>Call Next Token</h2>
 
-    <table>
-        <tr>
-            <th>Service</th>
-            <th>Action</th>
-        </tr>
+    <div style="overflow-x:auto;">
+        <table>
+            <tr>
+                <th>Service</th>
+                <th>Action</th>
+            </tr>
 
-        <tr th:each="service : ${services}">
-            <td th:text="${service.serviceName}"></td>
-            <td>
-                <a class="btn"
-                   th:href="@{'/admin/call-next/' + ${service.id}}">
-                    Call Next
-                </a>
-            </td>
-        </tr>
-    </table>
+            <tr th:each="service : ${services}">
+                <td th:text="${service.serviceName}"></td>
+                <td>
+                    <a class="btn"
+                       th:href="@{'/admin/call-next/' + ${service.id}}">
+                        Call Next
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <h2 style="margin-top:50px;">Daily Statistics</h2>
 
-    <table>
-        <tr>
-            <th>Total Tokens</th>
-            <th>Waiting</th>
-            <th>Called</th>
-            <th>Completed</th>
-        </tr>
-        <tr>
-            <td th:text="${total}"></td>
-            <td th:text="${waiting}"></td>
-            <td th:text="${called}"></td>
-            <td th:text="${completed}"></td>
-        </tr>
-    </table>
+    <div style="overflow-x:auto;">
+        <table>
+            <tr>
+                <th>Total Tokens</th>
+                <th>Waiting</th>
+                <th>Called</th>
+                <th>Completed</th>
+            </tr>
+            <tr>
+                <td th:text="${total}"></td>
+                <td th:text="${waiting}"></td>
+                <td th:text="${called}"></td>
+                <td th:text="${completed}"></td>
+            </tr>
+        </table>
+    </div>
 
 </section>
 
