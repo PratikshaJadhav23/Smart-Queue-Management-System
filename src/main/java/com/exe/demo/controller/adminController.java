@@ -80,15 +80,7 @@ public class adminController {
         model.addAttribute("services", serviceRepository.findAll());
 
         return "adminDashboard";
-    }
-
-    // Logout
-    @GetMapping("/admin/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/admin/login";
-    }
-    
+    } 
     
     @GetMapping("/admin/call-next/{serviceId}")
     public String callNextToken(@PathVariable Long serviceId,

@@ -6,153 +6,153 @@
 
     <style>
     .logout-btn{
-    background:#ff4d4d;
-    border:none;
-    padding:8px 16px;
-    color:white;
-    border-radius:5px;
-    cursor:pointer;
-    font-weight:500;
-}
+        background:#ff4d4d;
+        border:none;
+        padding:8px 16px;
+        color:white;
+        border-radius:5px;
+        cursor:pointer;
+        font-weight:500;
+    }
 
-.logout-btn:hover{
-    background:#cc0000;
-}
-        /* ===== GLOBAL ===== */
-        body{
-            margin:0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color:#f4f7fa;
-        }
+    .logout-btn:hover{
+        background:#cc0000;
+    }
+    /* ===== GLOBAL ===== */
+    body{
+        margin:0;
+        font-family: 'Segoe UI', sans-serif;
+        background-color:#f4f7fa;
+    }
 
-        /* ===== NAVBAR ===== */
+    /* ===== NAVBAR ===== */
+    .navbar{
+        background-color:#1f3c88;
+        padding:15px 40px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        color:white;
+    }
+
+    .navbar h2{
+        margin:0;
+        font-size:20px;
+    }
+
+    .navbar a{
+        color:white;
+        text-decoration:none;
+        font-weight:500;
+    }
+
+    .navbar a:hover{
+        text-decoration:underline;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container{
+        padding:40px;
+    }
+
+    /* ===== WELCOME SECTION ===== */
+    .welcome-box{
+        background:linear-gradient(135deg,#1f3c88,#4facfe);
+        color:white;
+        padding:30px;
+        border-radius:10px;
+        margin-bottom:30px;
+    }
+
+    .welcome-box h3{
+        margin-top:0;
+    }
+
+    /* ===== GENERATE TOKEN SECTION ===== */
+    .generate-section{
+        background:white;
+        padding:25px;
+        border-radius:10px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        margin-bottom:40px;
+    }
+
+    .generate-section p{
+        color:#555;
+    }
+
+    .btn{
+        padding:10px 20px;
+        background:#1f3c88;
+        color:white;
+        text-decoration:none;
+        border-radius:5px;
+        font-weight:bold;
+        display:inline-block;
+        margin-top:10px;
+    }
+
+    .btn:hover{
+        background:#162d66;
+    }
+
+    /* ===== TABLE ===== */
+    table{
+        width:100%;
+        border-collapse:collapse;
+        background:white;
+        box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    th{
+        background:#1f3c88;
+        color:white;
+        padding:12px;
+    }
+
+    td{
+        padding:12px;
+        text-align:center;
+        border-bottom:1px solid #ddd;
+    }
+
+    /* ===== STATUS BADGES ===== */
+    .status-waiting{
+        color:#ff9800;
+        font-weight:bold;
+    }
+
+    .status-called{
+        color:#2196f3;
+        font-weight:bold;
+    }
+
+    .status-completed{
+        color:#4caf50;
+        font-weight:bold;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+
         .navbar{
-            background-color:#1f3c88;
-            padding:15px 40px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            color:white;
-        }
-
-        .navbar h2{
-            margin:0;
-            font-size:20px;
-        }
-
-        .navbar a{
-            color:white;
-            text-decoration:none;
-            font-weight:500;
-        }
-
-        .navbar a:hover{
-            text-decoration:underline;
-        }
-
-        /* ===== CONTAINER ===== */
-        .container{
-            padding:40px;
-        }
-
-        /* ===== WELCOME SECTION ===== */
-        .welcome-box{
-            background:linear-gradient(135deg,#1f3c88,#4facfe);
-            color:white;
-            padding:30px;
-            border-radius:10px;
-            margin-bottom:30px;
-        }
-
-        .welcome-box h3{
-            margin-top:0;
-        }
-
-        /* ===== GENERATE TOKEN SECTION ===== */
-        .generate-section{
-            background:white;
-            padding:25px;
-            border-radius:10px;
-            box-shadow:0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom:40px;
-        }
-
-        .generate-section p{
-            color:#555;
-        }
-
-        .btn{
-            padding:10px 20px;
-            background:#1f3c88;
-            color:white;
-            text-decoration:none;
-            border-radius:5px;
-            font-weight:bold;
-            display:inline-block;
-            margin-top:10px;
-        }
-
-        .btn:hover{
-            background:#162d66;
-        }
-
-        /* ===== TABLE ===== */
-        table{
-            width:100%;
-            border-collapse:collapse;
-            background:white;
-            box-shadow:0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        th{
-            background:#1f3c88;
-            color:white;
-            padding:12px;
-        }
-
-        td{
-            padding:12px;
+            flex-direction:column;
             text-align:center;
-            border-bottom:1px solid #ddd;
+            gap:10px;
         }
 
-        /* ===== STATUS BADGES ===== */
-        .status-waiting{
-            color:#ff9800;
-            font-weight:bold;
+        .container{
+            padding:20px;
         }
 
-        .status-called{
-            color:#2196f3;
-            font-weight:bold;
+        table{
+            font-size:14px;
         }
 
-        .status-completed{
-            color:#4caf50;
-            font-weight:bold;
+        .welcome-box{
+            text-align:center;
         }
-
-        /* ===== RESPONSIVE ===== */
-        @media(max-width:768px){
-
-            .navbar{
-                flex-direction:column;
-                text-align:center;
-                gap:10px;
-            }
-
-            .container{
-                padding:20px;
-            }
-
-            table{
-                font-size:14px;
-            }
-
-            .welcome-box{
-                text-align:center;
-            }
-        }
+    }
 
     </style>
 </head>
@@ -174,7 +174,7 @@
     <h3>
     Welcome,
     <span th:text="${customer != null ? customer.fullName : 'Customer'}"></span>👋
-</h3>
+    </h3>
 
     <!-- ===== GENERATE TOKEN INFO SECTION ===== -->
     <div class="generate-section">
@@ -185,6 +185,13 @@
         </p>
 
         <a href="/token" class="btn">Generate Token</a>
+    </div>
+
+    <!-- ===== NEW DISPLAY PAGE CARD ===== -->
+    <div class="generate-section">
+        <h3>Next Tokens</h3>
+        <p>Stay ready! Here are the next 3 tokens that will be served shortly.</p>
+        <a href="/display" class="btn">Check next Token</a>
     </div>
 
     <!-- ===== MY TOKENS TABLE ===== -->
